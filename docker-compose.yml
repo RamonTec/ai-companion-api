@@ -1,0 +1,22 @@
+version: '3.7'
+services: 
+  mysql: 
+    image: mysql:8.0
+    restart: always
+    environment: 
+      - MYSQL_DATABASE=ai-companion
+      - MYSQL_ROOT_PASSWORD=prisma
+    ports: 
+      - "3307:3306"
+    networks: 
+      - prisma-network
+    volumes: 
+      - mysql_data:/var/lib/mysql
+    logging: 
+      options: 
+        max-size: "10m"
+        max-file: "3"
+networks: 
+  prisma-network: 
+volumes: 
+  mysql_data: 
