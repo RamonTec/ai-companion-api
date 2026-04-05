@@ -33,7 +33,7 @@ export type UserMinAggregateOutputType = {
   phone: string | null
   isVerified: boolean | null
   role: $Enums.Role | null
-  nickname: string | null
+  nickName: string | null
   subscriptionId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -48,7 +48,7 @@ export type UserMaxAggregateOutputType = {
   phone: string | null
   isVerified: boolean | null
   role: $Enums.Role | null
-  nickname: string | null
+  nickName: string | null
   subscriptionId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,7 +63,7 @@ export type UserCountAggregateOutputType = {
   phone: number
   isVerified: number
   role: number
-  nickname: number
+  nickName: number
   subscriptionId: number
   createdAt: number
   updatedAt: number
@@ -80,7 +80,7 @@ export type UserMinAggregateInputType = {
   phone?: true
   isVerified?: true
   role?: true
-  nickname?: true
+  nickName?: true
   subscriptionId?: true
   createdAt?: true
   updatedAt?: true
@@ -95,7 +95,7 @@ export type UserMaxAggregateInputType = {
   phone?: true
   isVerified?: true
   role?: true
-  nickname?: true
+  nickName?: true
   subscriptionId?: true
   createdAt?: true
   updatedAt?: true
@@ -110,7 +110,7 @@ export type UserCountAggregateInputType = {
   phone?: true
   isVerified?: true
   role?: true
-  nickname?: true
+  nickName?: true
   subscriptionId?: true
   createdAt?: true
   updatedAt?: true
@@ -195,11 +195,11 @@ export type UserGroupByOutputType = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone: string | null
   isVerified: boolean
   role: $Enums.Role
-  nickname: string
-  subscriptionId: string
+  nickName: string
+  subscriptionId: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -231,14 +231,14 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   firstName?: Prisma.StringFilter<"User"> | string
   lastName?: Prisma.StringFilter<"User"> | string
-  phone?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  nickname?: Prisma.StringFilter<"User"> | string
-  subscriptionId?: Prisma.StringFilter<"User"> | string
+  nickName?: Prisma.StringFilter<"User"> | string
+  subscriptionId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   userPaymentMethods?: Prisma.UserPaymentMethodListRelationFilter
   orders?: Prisma.OrderListRelationFilter
 }
@@ -249,11 +249,11 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  nickname?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrder
+  nickName?: Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
@@ -266,7 +266,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
   phone?: string
-  nickname?: string
+  nickName?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -275,13 +275,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   lastName?: Prisma.StringFilter<"User"> | string
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  subscriptionId?: Prisma.StringFilter<"User"> | string
+  subscriptionId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   userPaymentMethods?: Prisma.UserPaymentMethodListRelationFilter
   orders?: Prisma.OrderListRelationFilter
-}, "id" | "email" | "phone" | "nickname">
+}, "id" | "email" | "phone" | "nickName">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -289,11 +289,11 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  nickname?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrder
+  nickName?: Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -310,11 +310,11 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
   lastName?: Prisma.StringWithAggregatesFilter<"User"> | string
-  phone?: Prisma.StringWithAggregatesFilter<"User"> | string
+  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-  nickname?: Prisma.StringWithAggregatesFilter<"User"> | string
-  subscriptionId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  nickName?: Prisma.StringWithAggregatesFilter<"User"> | string
+  subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -325,13 +325,13 @@ export type UserCreateInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  subscription: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   userPaymentMethods?: Prisma.UserPaymentMethodCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
 }
@@ -342,11 +342,11 @@ export type UserUncheckedCreateInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
-  subscriptionId: string
+  nickName: string
+  subscriptionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedCreateNestedManyWithoutUserInput
@@ -359,13 +359,13 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
   userPaymentMethods?: Prisma.UserPaymentMethodUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
 }
@@ -376,11 +376,11 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedUpdateManyWithoutUserNestedInput
@@ -393,11 +393,11 @@ export type UserCreateManyInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
-  subscriptionId: string
+  nickName: string
+  subscriptionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -408,10 +408,10 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -422,11 +422,11 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -461,7 +461,7 @@ export type UserCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  nickname?: Prisma.SortOrder
+  nickName?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -476,7 +476,7 @@ export type UserMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  nickname?: Prisma.SortOrder
+  nickName?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -491,7 +491,7 @@ export type UserMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  nickname?: Prisma.SortOrder
+  nickName?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -581,13 +581,13 @@ export type UserCreateWithoutOrdersInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  subscription: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   userPaymentMethods?: Prisma.UserPaymentMethodCreateNestedManyWithoutUserInput
 }
 
@@ -597,11 +597,11 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
-  subscriptionId: string
+  nickName: string
+  subscriptionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedCreateNestedManyWithoutUserInput
@@ -629,13 +629,13 @@ export type UserUpdateWithoutOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
   userPaymentMethods?: Prisma.UserPaymentMethodUpdateManyWithoutUserNestedInput
 }
 
@@ -645,11 +645,11 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedUpdateManyWithoutUserNestedInput
@@ -661,10 +661,10 @@ export type UserCreateWithoutSubscriptionInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodCreateNestedManyWithoutUserInput
@@ -677,10 +677,10 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedCreateNestedManyWithoutUserInput
@@ -722,11 +722,11 @@ export type UserScalarWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   firstName?: Prisma.StringFilter<"User"> | string
   lastName?: Prisma.StringFilter<"User"> | string
-  phone?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  nickname?: Prisma.StringFilter<"User"> | string
-  subscriptionId?: Prisma.StringFilter<"User"> | string
+  nickName?: Prisma.StringFilter<"User"> | string
+  subscriptionId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -737,13 +737,13 @@ export type UserCreateWithoutUserPaymentMethodsInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  subscription: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
 }
 
@@ -753,11 +753,11 @@ export type UserUncheckedCreateWithoutUserPaymentMethodsInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
-  subscriptionId: string
+  nickName: string
+  subscriptionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -785,13 +785,13 @@ export type UserUpdateWithoutUserPaymentMethodsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
 }
 
@@ -801,11 +801,11 @@ export type UserUncheckedUpdateWithoutUserPaymentMethodsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -817,10 +817,10 @@ export type UserCreateManySubscriptionInput = {
   password: string
   firstName: string
   lastName: string
-  phone: string
+  phone?: string | null
   isVerified?: boolean
   role?: $Enums.Role
-  nickname: string
+  nickName: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -831,10 +831,10 @@ export type UserUpdateWithoutSubscriptionInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUpdateManyWithoutUserNestedInput
@@ -847,10 +847,10 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPaymentMethods?: Prisma.UserPaymentMethodUncheckedUpdateManyWithoutUserNestedInput
@@ -863,10 +863,10 @@ export type UserUncheckedUpdateManyWithoutSubscriptionInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  nickName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -920,11 +920,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   phone?: boolean
   isVerified?: boolean
   role?: boolean
-  nickname?: boolean
+  nickName?: boolean
   subscriptionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
+  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
   userPaymentMethods?: boolean | Prisma.User$userPaymentMethodsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -941,15 +941,15 @@ export type UserSelectScalar = {
   phone?: boolean
   isVerified?: boolean
   role?: boolean
-  nickname?: boolean
+  nickName?: boolean
   subscriptionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "phone" | "isVerified" | "role" | "nickname" | "subscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "phone" | "isVerified" | "role" | "nickName" | "subscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
+  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
   userPaymentMethods?: boolean | Prisma.User$userPaymentMethodsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -958,7 +958,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    subscription: Prisma.$SubscriptionPayload<ExtArgs>
+    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
     userPaymentMethods: Prisma.$UserPaymentMethodPayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
   }
@@ -968,11 +968,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     firstName: string
     lastName: string
-    phone: string
+    phone: string | null
     isVerified: boolean
     role: $Enums.Role
-    nickname: string
-    subscriptionId: string
+    nickName: string
+    subscriptionId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1315,7 +1315,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subscription<T extends Prisma.SubscriptionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   userPaymentMethods<T extends Prisma.User$userPaymentMethodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userPaymentMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPaymentMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1355,7 +1355,7 @@ export interface UserFieldRefs {
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
-  readonly nickname: Prisma.FieldRef<"User", 'String'>
+  readonly nickName: Prisma.FieldRef<"User", 'String'>
   readonly subscriptionId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -1704,6 +1704,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.subscription
+ */
+export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subscription
+   */
+  select?: Prisma.SubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subscription
+   */
+  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SubscriptionWhereInput
 }
 
 /**

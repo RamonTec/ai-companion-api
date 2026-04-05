@@ -385,9 +385,9 @@ export type SubscriptionSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
 }
 
-export type SubscriptionScalarRelationFilter = {
-  is?: Prisma.SubscriptionWhereInput
-  isNot?: Prisma.SubscriptionWhereInput
+export type SubscriptionNullableScalarRelationFilter = {
+  is?: Prisma.SubscriptionWhereInput | null
+  isNot?: Prisma.SubscriptionWhereInput | null
 }
 
 export type SubscriptionCreateNestedOneWithoutUserInput = {
@@ -396,10 +396,12 @@ export type SubscriptionCreateNestedOneWithoutUserInput = {
   connect?: Prisma.SubscriptionWhereUniqueInput
 }
 
-export type SubscriptionUpdateOneRequiredWithoutUserNestedInput = {
+export type SubscriptionUpdateOneWithoutUserNestedInput = {
   create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput
   upsert?: Prisma.SubscriptionUpsertWithoutUserInput
+  disconnect?: Prisma.SubscriptionWhereInput | boolean
+  delete?: Prisma.SubscriptionWhereInput | boolean
   connect?: Prisma.SubscriptionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutUserInput, Prisma.SubscriptionUpdateWithoutUserInput>, Prisma.SubscriptionUncheckedUpdateWithoutUserInput>
 }

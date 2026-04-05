@@ -132,7 +132,7 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   isVerified: 'isVerified',
   role: 'role',
-  nickname: 'nickname',
+  nickName: 'nickName',
   subscriptionId: 'subscriptionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -200,7 +200,7 @@ export const UserOrderByRelevanceFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
-  nickname: 'nickname',
+  nickName: 'nickName',
   subscriptionId: 'subscriptionId'
 } as const
 
