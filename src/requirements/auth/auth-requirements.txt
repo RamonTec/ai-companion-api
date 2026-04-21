@@ -1,0 +1,15 @@
+system must allow to the user to:
+Register
+Reset password
+Login into the system
+Logout from the system
+Refresh token
+
+If user logged into the system we should protect routes based on user roles
+
+We must use guards and decorators to validate actions based on user roles
+We must use pipes to validate data from app, dtos and services
+
+We must use JWT tokens to authenticate users
+We must use bcrypt to hash passwords
+We must use AES-256-CBC to encrypt serial_token
