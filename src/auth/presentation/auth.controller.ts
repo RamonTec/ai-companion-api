@@ -1,14 +1,14 @@
+import { Body, Controller, Post, Req } from "@nestjs/common";
+import { UserRegisterDto } from "../application/dtos/user-register.dto.js";
+import { UserRegisterUseCase } from "../application/use-cases/user-resgister.use-case.js";
 
-/**
- * things that i must to do:
- * 1... define and endpoint to receive and return back responso to create an user
- */
+
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly userRegisterUseCase: UserRegisterUseCase) { }
 
     @Post()
-    register() {
-
+    register(@Body() dto: UserRegisterDto) {
+        return this.userRegisterUseCase.execute(dto);
     }
 }
