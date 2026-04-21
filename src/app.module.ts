@@ -4,6 +4,7 @@ import { UserModule } from './users/user.module.js';
 import { PrismaModule } from './prisma.module.js';
 import { CommonModule } from './common/common.module.js';
 import { NotificationModule } from './notifications/notification.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { NotificationModule } from './notifications/notification.module.js';
     PrismaModule,
     CommonModule,
     UserModule,
+    AuthModule,
     NotificationModule
   ],
 })
