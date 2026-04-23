@@ -39,4 +39,6 @@ export class User {
     get getFirstName(): string { return this.firstName; }
     get getLastName(): string { return this.lastName; }
     get getNickName(): string { return this.nickName; }
+    get getPassword(): string { return this.password; }
+    get getRole(): string { return this.role; }
 }

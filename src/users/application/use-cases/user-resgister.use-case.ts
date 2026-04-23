@@ -17,7 +17,17 @@ export class UserRegisterUseCase {
             throw new Error('User already exists');
         }
         const hashedPassword = await this.commonRepository.hashPassword(userRegisterDto.password);
-        const newUser = await this.userRepository.register({ ...userRegisterDto, password: hashedPassword });
+        const newUSerDomain = User.fromPersistence({
+            email: userRegisterDto.email,
+            password: hashedPassword,
+            firstName: userRegisterDto.firstName,
+            lastName: userRegisterDto.lastName,
+            nickName: userRegisterDto.nickName,
+            isVerified: false,
+            role: 'USER',
+        })
+
+        const newUser = await this.userRepository.register(newUSerDomain);
         await this.notificationService.send(newUser.getEmail, 'Welcome', 'Welcome to our platform');
         return newUser;
     }

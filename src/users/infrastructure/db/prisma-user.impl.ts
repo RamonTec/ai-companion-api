@@ -1,19 +1,18 @@
 import { PrismaClient } from "../../../../prisma/generated/client.js";
 import { User } from "../../domain/entities/user.entity.js";
 import { IUserRepository } from "../../domain/ports.js";
-import { UserRegisterDto } from "../../application/dtos/user-register.dto.js";
 
 export class PrismaUserImpl implements IUserRepository {
     constructor(private readonly prisma: PrismaClient) { }
 
-    async register(userRegisterDto: UserRegisterDto): Promise<User> {
+    async register(user: User): Promise<User> {
         const prismaUser = await this.prisma.user.create({
             data: {
-                email: userRegisterDto.email,
-                password: userRegisterDto.password,
-                firstName: userRegisterDto.firstName,
-                lastName: userRegisterDto.lastName,
-                nickName: userRegisterDto.nickName,
+                email: user.getEmail,
+                password: user.getPassword,
+                firstName: user.getFirstName,
+                lastName: user.getLastName,
+                nickName: user.getNickName,
             },
         });
 
