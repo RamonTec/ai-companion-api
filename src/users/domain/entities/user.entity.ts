@@ -1,3 +1,5 @@
+import { UserRole } from "../user.js";
+
 export class User {
     private constructor(
         private readonly id: string,
@@ -9,7 +11,7 @@ export class User {
         private readonly lastName: string,
         private readonly isVerified: boolean,
         private readonly nickName: string,
-        private readonly role: string,
+        private readonly role: UserRole,
         private readonly phone?: string,
         private readonly paymentMethod?: string[],
         private readonly subscription?: string,
@@ -40,5 +42,6 @@ export class User {
     get getLastName(): string { return this.lastName; }
     get getNickName(): string { return this.nickName; }
     get getPassword(): string { return this.password; }
-    get getRole(): string { return this.role; }
+    get getIsVerified(): boolean { return this.isVerified; }
+    get getRole(): UserRole { return this.role; }
 }
