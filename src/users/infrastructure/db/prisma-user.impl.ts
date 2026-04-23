@@ -13,6 +13,8 @@ export class PrismaUserImpl implements IUserRepository {
                 firstName: user.getFirstName,
                 lastName: user.getLastName,
                 nickName: user.getNickName,
+                isVerified: user.getIsVerified,
+                role: user.getRole,
             },
         });
 
