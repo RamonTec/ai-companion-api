@@ -63,4 +63,17 @@ export class PrismaUserImpl implements IUserRepository {
 
         return prismaUser ? User.fromPersistence(prismaUser) : null;
     }
+
+    async updateUserPassword(id: string, password: string): Promise<User> {
+        const prismaUser = await this.prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                password,
+            },
+        });
+
+        return User.fromPersistence(prismaUser);
+    }
 }
