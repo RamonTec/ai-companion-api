@@ -1,24 +1,24 @@
 import { LoginDto } from "../dtos/login.dto.js";
-import { CommonRepository } from "src/common/ports.js";
-import { IUserRepository } from "@/users/domain/ports.js";
+import { IAuthUserProvider, IPasswordHasher, ITokenProvider } from "../../domain/ports.js";
 
 export class LoginUseCase {
     constructor(
-        private readonly commonRepository: CommonRepository,
-        private readonly userRepository: IUserRepository,
+        private readonly userProvider: IAuthUserProvider,
+        private readonly passwordHasher: IPasswordHasher,
+        private readonly tokenProvider: ITokenProvider,
     ) { }
 
     async execute(dto: LoginDto): Promise<{ access_token: string }> {
-        const userExits = await this.userRepository.findByEmail(dto.email);
+        const userExits = await this.userProvider.findByEmail(dto.email);
         if (!userExits) {
-            throw new Error('User not found');
+            throw new Error('Invalid information provided.');
         }
 
-        const isPasswordValid = await this.commonRepository.comparePassword(dto.password, userExits.getPassword);
+        const isPasswordValid = await this.passwordHasher.compare(dto.password, userExits.getPassword());
         if (!isPasswordValid) {
-            throw new Error('Invalid password');
+            throw new Error('Invalid information provided.');
         }
 
-        return this.commonRepository.generateToken(userExits.getEmail, userExits.getNickName, userExits.getRole);
+        return this.tokenProvider.generate(userExits.getEmail(), userExits.getNickName(), userExits.getRole());
     }
-}
+}
