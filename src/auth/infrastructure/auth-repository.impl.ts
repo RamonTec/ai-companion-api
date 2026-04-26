@@ -1,6 +1,7 @@
 import { IAuthRepository } from "../domain/ports.js";
 import { PrismaClient } from "prisma/generated/client.js";
-import { JwtService } from '@nestjs/jwt';
+import { JwtService } from "@nestjs/jwt";
+
 
 export class AuthRepositoryImpl implements IAuthRepository {
     constructor(
