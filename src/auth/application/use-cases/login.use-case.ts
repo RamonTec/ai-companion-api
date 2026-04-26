@@ -1,12 +1,9 @@
-import { IAuthRepository } from "src/auth/domain/ports.js";
-import { User } from "../../domain/entities/user.entity.js";
 import { LoginDto } from "../dtos/login.dto.js";
 import { CommonRepository } from "src/common/ports.js";
 import { IUserRepository } from "@/users/domain/ports.js";
 
 export class LoginUseCase {
     constructor(
-        private readonly authRepository: IAuthRepository,
         private readonly commonRepository: CommonRepository,
         private readonly userRepository: IUserRepository,
     ) { }
@@ -22,6 +19,6 @@ export class LoginUseCase {
             throw new Error('Invalid password');
         }
 
-        return this.authRepository.login(userExits.getEmail, userExits.getNickName, userExits.getRole);
+        return this.commonRepository.generateToken(userExits.getEmail, userExits.getNickName, userExits.getRole);
     }
 }
