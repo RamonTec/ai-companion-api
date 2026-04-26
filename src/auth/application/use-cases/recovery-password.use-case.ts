@@ -1,30 +1,29 @@
-
-import { IUserRepository } from "@/users/domain/ports.js";
-import { CommonRepository } from "@/common/ports.js";
-import { ResetPasswordDto } from "../dtos/reset-password.dto.js";
+import { RecoveryPasswordDto } from "../dtos/recovery-password.dto.js";
+import { IAuthUserProvider, IPasswordHasher, ITokenProvider } from "../../domain/ports.js";
 
 export class RecoveryPasswordUseCase {
     constructor(
-        private readonly userRepository: IUserRepository,
-        private readonly commonRepository: CommonRepository,
+        private readonly userProvider: IAuthUserProvider,
+        private readonly passwordHasher: IPasswordHasher,
+        private readonly tokenProvider: ITokenProvider,
     ) { }
 
-    async execute(dto: ResetPasswordDto): Promise<boolean> {
-        const validateToken = await this.commonRepository.validateToken(dto.token);
+    async execute(dto: RecoveryPasswordDto): Promise<boolean> {
+        const validateToken = await this.tokenProvider.validate(dto.token);
         if (!validateToken) {
-            throw new Error('Token is not valid');
+            throw new Error('Invalid information provided.');
         }
-        const userExits = await this.userRepository.findByEmail(dto.email);
+        const userExits = await this.userProvider.findByEmail(dto.email);
         if (!userExits) {
-            throw new Error('User not found');
+            throw new Error('Invalid information provided.');
         }
 
-        if (dto.confirmPassword !== dto.newPassword) {
+        if (dto.confirmPassword !== dto.password) {
             throw new Error('Passwords do not match');
         }
 
-        const hashPassword = await this.commonRepository.hashPassword(dto.newPassword);
-        await this.userRepository.updateUserPassword(userExits.getId, hashPassword);
+        const hashPassword = await this.passwordHasher.hash(dto.password);
+        await this.userProvider.updatePassword(userExits.getId(), hashPassword);
         return true;
     }
-}
+}
