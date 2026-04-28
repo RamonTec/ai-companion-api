@@ -26,5 +26,21 @@ export class ConversationImpl implements IConversationRepository {
         return docs;
     }
 
+    async createConversation(data: ICreateConversation): Promise<IConversation> {
+        const { participantSenderId, participantReceiverId, message } = data;
 
+        const participants = new Participant({
+            userId: participantSenderId,
+            iaProfileId: participantReceiverId,
+            joinedAt: new Date(),
+        });
+
+        const conversation = new Conversation({
+            participants: participants,
+            lastMessage: message,
+        });
+
+        const savedConversation = await conversation.save();
+        return savedConversation;
+    }
 }
