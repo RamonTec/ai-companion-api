@@ -23,7 +23,6 @@ export interface IUpdateConversation {
 }
 
 export interface ISendMessage {
-    conversationId: string;
     message: string;
     senderId: string;
     receiverId: string;
