@@ -12,10 +12,10 @@ export class SendMessageUseCase {
 
   async execute(dto: ISendMessage): Promise<string> {
     const { senderId, receiverId, message } = dto;
-    const users = await this.userProvider.findUsersByIds([senderId, receiverId]);
+    const user = await this.userProvider.findById(senderId);
 
-    if (!users || users.length < 2) {
-      throw new Error('Sender or receiver does not exist.');
+    if (!user) {
+      throw new Error('Invalid information');
     }
 
     let conversation = await this.conversationRepo.findConversationBtwUsers(
