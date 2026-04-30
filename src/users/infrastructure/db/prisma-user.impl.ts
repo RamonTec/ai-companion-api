@@ -76,4 +76,16 @@ export class PrismaUserImpl implements IUserRepository {
 
         return User.fromPersistence(prismaUser);
     }
+
+    async findUsersByIds(ids: string[]): Promise<User[]> {
+        const prismaUsers = await this.prisma.user.findMany({
+            where: {
+                id: {
+                    in: ids,
+                },
+            },
+        });
+
+        return prismaUsers.map((prismaUser) => User.fromPersistence(prismaUser));
+    }
 }
