@@ -8,19 +8,14 @@ export class SendMessageUseCase {
   constructor(
     private readonly userProvider: IMessageUserProvider,
     private readonly conversationRepo: IConversationRepository,
-  ) {}
+  ) { }
 
   async execute(dto: ISendMessage): Promise<string> {
     const { senderId, receiverId, message } = dto;
-    const senderExists = await this.userProvider.findById(senderId);
+    const users = await this.userProvider.findUsersByIds([senderId, receiverId]);
 
-    if (!senderExists) {
-      throw new Error('Sender does not exist.');
-    }
-    const receiverExists = await this.userProvider.findById(receiverId);
-
-    if (!receiverExists) {
-      throw new Error('Receiver does not exist.');
+    if (!users || users.length < 2) {
+      throw new Error('Sender or receiver does not exist.');
     }
 
     let conversation = await this.conversationRepo.findConversationBtwUsers(
@@ -35,6 +30,14 @@ export class SendMessageUseCase {
         message,
       });
 
+      return conversation.lastMessage;
+    } else {
+      await this.conversationRepo.sendMessage({
+        senderId,
+        receiverId,
+        message,
+      });
+      await this.conversationRepo.updateLastMessage(conversation.id, message);
       return conversation.lastMessage;
     }
   }
