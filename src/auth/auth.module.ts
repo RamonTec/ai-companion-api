@@ -8,10 +8,9 @@ import { LoginUseCase } from "./application/use-cases/login.use-case.js";
 import { ResetPasswordUseCase } from "./application/use-cases/reset-password.use-case.js";
 import { RecoveryPasswordUseCase } from "./application/use-cases/recovery-password.use-case.js";
 import { UserModule } from "@/users/user.module.js";
-import { UserRegisterUseCase } from "@/users/application/use-cases/user-resgister.use-case.js";
 
 @Module({
-    imports: [UserModule], // Import UserModule if needed for UserRegisterUseCase and IUserRepository
+    imports: [UserModule],
     controllers: [AuthController],
     providers: [
         { provide: ITokenProvider, useClass: TokenProviderImpl },
