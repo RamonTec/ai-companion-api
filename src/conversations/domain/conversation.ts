@@ -26,6 +26,7 @@ export interface ISendMessage {
     message: string;
     senderId: string;
     receiverId: string;
+    conversationId?: string;
 }
 
 export interface IMessage {

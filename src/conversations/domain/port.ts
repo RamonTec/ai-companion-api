@@ -17,7 +17,7 @@ export abstract class IConversationRepository {
     before?: Date,
     limit?: number,
   ): Promise<IMessage[]>;
-  abstract updateLastMessage(convId: string, message: IMessage): Promise<void>;
+  abstract updateLastMessage(convId: string, message: string): Promise<void>;
   abstract markAsRead(
     convId: string,
     userId: string,
@@ -30,5 +30,6 @@ export abstract class IConversationRepository {
 }
 
 export abstract class IMessageUserProvider {
-    abstract findById(id: string): Promise<AuthUser | null>;
+  abstract findById(id: string): Promise<AuthUser | null>;
+  abstract findUsersByIds(ids: string[]): Promise<AuthUser[]>;
 }
