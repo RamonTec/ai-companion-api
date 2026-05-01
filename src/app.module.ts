@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -20,6 +21,14 @@ import { JwtModule } from '@nestjs/jwt';
         secret: process.env.JWT_SECRET_SEED,
         signOptions: { expiresIn: '1d' },
       }),
+    }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL_MONGO || ''),
     PrismaModule,
