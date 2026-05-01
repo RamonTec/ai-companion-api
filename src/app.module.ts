@@ -6,11 +6,20 @@ import { NotificationModule } from './notifications/notification.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      imports: [ConfigModule],
+      useFactory: async () => ({
+        secret: process.env.JWT_SECRET_SEED,
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL_MONGO || ''),
     PrismaModule,
