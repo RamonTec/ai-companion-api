@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post, Req } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, Patch, Post, Req } from "@nestjs/common";
 import { LoginDto } from "../application/dtos/login.dto.js";
 import { LoginUseCase } from "../application/use-cases/login.use-case.js";
 import { UserRegisterUseCase } from "@/users/application/use-cases/user-resgister.use-case.js";
@@ -18,21 +18,25 @@ export class AuthController {
         private readonly recoveryPasswordUseCase: RecoveryPasswordUseCase,
     ) { }
 
+    @HttpCode(HttpStatus.CREATED)
     @Post('register')
     register(@Body() dto: UserRegisterDto) {
         return this.userRegisterUseCase.execute(dto);
     }
 
+    @HttpCode(HttpStatus.OK)
     @Post('login')
     login(@Body() dto: LoginDto) {
         return this.userLoginUseCase.execute(dto);
     }
 
+    @HttpCode(HttpStatus.OK)
     @Post('reset-password')
     resetPassword(@Body() dto: ResetPasswordDto) {
         return this.resetPasswordUseCase.execute(dto);
     }
 
+    @HttpCode(HttpStatus.OK)
     @Patch('recovery-password')
     updatePassword(@Body() dto: RecoveryPasswordDto) {
         return this.recoveryPasswordUseCase.execute(dto);
