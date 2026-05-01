@@ -1,16 +1,4 @@
+import { PartialType } from "@nestjs/swagger";
+import { RegisterIaModelDto } from "./register-ia-model.dto.js";
 
-export class UpdateIaModelDto {
-    name: string;
-    description: string;
-    category: string;
-    personality: string;
-    provider: string;
-    providerModelId: string;
-    basePrompt: string;
-    temperature: number;
-    topP: number;
-    voiceId: string;
-    knowledgeBaseId: string;
-    requiredTier: string;
-    maxTokens: number;
-}
+export class UpdateIaModelDto extends PartialType(RegisterIaModelDto) { }
