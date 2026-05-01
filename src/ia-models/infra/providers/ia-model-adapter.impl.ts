@@ -2,7 +2,7 @@ import { IaModelRepository } from "@/ia-models/domain/ports.js";
 import { Inject, Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { IaModelDocument } from "../db/ia-model.schema.js";
-import { IaModelCreate, IaModel, IaModelUpdate } from "@/ia-models/domain/ia-models.js";
+import { IaModelCreate, IaModel, IaModelUpdate, FilterIaModels } from "@/ia-models/domain/ia-models.js";
 
 @Injectable()
 export class IaModelAdapterImpl implements IaModelRepository {
@@ -48,5 +48,16 @@ export class IaModelAdapterImpl implements IaModelRepository {
             throw new Error("IaModel not found");
         }
         return this.mapToIaModelDomain(savedDocument);
+    }
+
+    async find(dto: FilterIaModels): Promise<IaModel[]> {
+        const iaModels = await this.iaModel.find({
+            $or: [
+                { name: dto.name },
+                { category: dto.category },
+                { personality: dto.personality },
+            ],
+        });
+        return iaModels.map(this.mapToIaModelDomain);
     }
 }
