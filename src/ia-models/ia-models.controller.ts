@@ -1,14 +1,16 @@
-import { Body, Controller, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { RegisterIaModelDto } from "./application/dtos/register-ia-model.dto.js";
 import { RegisterIaModelUseCase } from "./application/use-cases/register-ia-model.use-case.js";
 import { UpdateIaModelUseCase } from "./application/use-cases/update-ia-model.use-case.js";
 import { UpdateIaModelDto } from "./application/dtos/update-ia-model.dto.js";
+import { GetIaModelDetailUseCase } from "./application/use-cases/get-ia-model-detail.use-case.js";
 
 @Controller('ia-models')
 export class IaModelsController {
     constructor(
         private readonly iaModelRegisterUseCase: RegisterIaModelUseCase,
         private readonly iaModelUpdateUseCase: UpdateIaModelUseCase,
+        private readonly iaModelFindUseCase: GetIaModelDetailUseCase,
     ) { }
 
     @Post('')
@@ -19,6 +21,11 @@ export class IaModelsController {
     @Put(':id')
     update(@Param('id') id: string, @Body() dto: UpdateIaModelDto) {
         return this.iaModelUpdateUseCase.execute(id, dto);
+    }
+
+    @Get(':id')
+    findById(@Param('id') id: string) {
+        return this.iaModelFindUseCase.execute(id);
     }
 
 }
