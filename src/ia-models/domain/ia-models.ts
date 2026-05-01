@@ -30,3 +30,5 @@ export interface IaModelCreate {
     requiredTier: string;
     maxTokens: number;
 }
+
+export interface IaModelUpdate extends Partial<IaModelCreate> { }
