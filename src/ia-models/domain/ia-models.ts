@@ -32,3 +32,9 @@ export interface IaModelCreate {
 }
 
 export interface IaModelUpdate extends Partial<IaModelCreate> { }
+
+export interface FilterIaModels {
+    name?: string;
+    category?: string;
+    personality?: string;
+}
