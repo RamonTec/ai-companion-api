@@ -1,35 +1,26 @@
-import type {
-  IConversation,
-  ICreateConversation,
-  IMessage,
-  ISendMessage,
-} from './conversation.js';
+import { AuthUser } from "@/auth/domain/ports.js";
+import { IConversation, IMessage } from "./conversation.entities.js";
+import { ConversationDomain } from "./conversation.js";
 
-export abstract class IConversationRepository {
-  abstract createConversation(
-    data: ICreateConversation,
-  ): Promise<IConversation>;
-  abstract findConversationById(convId: string): Promise<IConversation | null>;
-  abstract findConversationsByUser(userId: string): Promise<IConversation[]>;
-  abstract sendMessage(message: ISendMessage): Promise<IMessage>;
-  abstract findMessagesByConversation(
-    convId: string,
-    before?: Date,
-    limit?: number,
-  ): Promise<IMessage[]>;
-  abstract updateLastMessage(convId: string, message: string): Promise<void>;
-  abstract markAsRead(
-    convId: string,
-    userId: string,
-    messageId: string,
-  ): Promise<void>;
-  abstract findConversationBtwUsers(
-    senderId: string,
-    receiverId: string,
-  ): Promise<IConversation | null>;
+export interface IConversationRepository {
+  findConversationBtwUsers(senderId: string, receiverId: string): Promise<ConversationDomain | null>;
+  findConversationById(convId: string): Promise<ConversationDomain | null>;
+  save(conversation: ConversationDomain, pendingMessage?: string): Promise<void>;
+  findConversationsByUser(userId: string): Promise<IConversation[]>;
+  findMessagesByConversation(convId: string, before?: Date, limit?: number): Promise<IMessage[]>;
+  markAsRead(convId: string, userId: string, messageId: string): Promise<void>;
 }
 
 export abstract class IMessageUserProvider {
   abstract findById(id: string): Promise<AuthUser | null>;
   abstract findUsersByIds(ids: string[]): Promise<AuthUser[]>;
+}
+
+export interface ConversationAiModel {
+  id: string;
+  status: string;
+}
+
+export abstract class IMessageAiModelProvider {
+  abstract findAiById(id: string): Promise<ConversationAiModel | null>;
 }
