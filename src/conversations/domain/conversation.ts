@@ -1,41 +1,48 @@
-export interface IConversation {
-    id: string;
-    participants: IParticipant;
-    lastMessage: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
+export class ConversationDomain {
+    private constructor(
+        private readonly id: string,
+        private readonly participantSenderId: string,
+        private readonly participantReceiverId: string,
+        private lastMessage: string,
+        private updatedAt: Date,
+    ) { }
 
-export interface IParticipant {
-    userId: string;
-    iaProfileId: string;
-    joinedAt: Date;
-}
+    static reconstitute(id: string, senderId: string, receiverId: string, lastMessage: string, updatedAt: Date): ConversationDomain {
+        return new ConversationDomain(id, senderId, receiverId, lastMessage, updatedAt);
+    }
 
-export interface ICreateConversation {
-    participantSenderId: string;
-    participantReceiverId: string;
-    message: string;
-}
+    static createNew(senderId: string, receiverId: string, firstMessage: string, aiModelStatus: string): ConversationDomain {
+        if (senderId === receiverId) {
+            throw new Error('A user cannot start a conversation with themselves');
+        }
 
-export interface IUpdateConversation {
-    lastMessage: string;
-}
+        const conversation = new ConversationDomain(
+            crypto.randomUUID(),
+            senderId,
+            receiverId,
+            firstMessage,
+            new Date(),
+        );
 
-export interface ISendMessage {
-    message: string;
-    senderId: string;
-    receiverId: string;
-    conversationId?: string;
-}
+        conversation.validateAiStatus(aiModelStatus);
+        return conversation;
+    }
 
-export interface IMessage {
-    id: string;
-    conversationId: string;
-    senderId: string;
-    receiverId: string;
-    message: string;
-    read: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    public addMessage(message: string, aiModelStatus: string): void {
+        this.validateAiStatus(aiModelStatus);
+        this.lastMessage = message;
+        this.updatedAt = new Date();
+    }
+
+    private validateAiStatus(aiModelStatus: string): void {
+        if (aiModelStatus !== 'ACTIVE') {
+            throw new Error('Cannot send messages to an inactive AI Model');
+        }
+    }
+
+    public getId(): string { return this.id; }
+    public getSenderId(): string { return this.participantSenderId; }
+    public getReceiverId(): string { return this.participantReceiverId; }
+    public getLastMessage(): string { return this.lastMessage; }
+    public getUpdatedAt(): Date { return this.updatedAt; }
 }
