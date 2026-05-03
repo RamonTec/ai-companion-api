@@ -3,8 +3,8 @@ import { SendMessageDto } from './application/dto/send-message.dto.js';
 import { SendMessageUseCase } from './application/use-cases/send-message.use-case.js';
 import { AuthGuard } from '@/common/guards/auth.guard.js';
 
-@Controller('auth')
-export class AuthController {
+@Controller('conversation')
+export class ConversationsController {
   constructor(private readonly sendMessage: SendMessageUseCase) { }
 
   @UseGuards(AuthGuard)
