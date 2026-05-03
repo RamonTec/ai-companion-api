@@ -9,7 +9,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Post('/send-message')
-  async register(@Body() dto: SendMessageDto) {
-    return await this.sendMessage.execute(dto);
+  async register(@Body() dto: SendMessageDto, @Req() req: Request) {
+    return await this.sendMessage.execute(dto, req.user.id);
   }
 }
