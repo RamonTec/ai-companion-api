@@ -52,6 +52,30 @@ export class IaModel extends Document {
 
     @Prop({ default: true })
     isActive: boolean;
+
+    @Prop({ default: 0 })
+    totalConversations: number;
+
+    @Prop({ default: 0 })
+    totalMessages: number;
+
+    @Prop({ default: 0 })
+    popularityScore: number;
+
+    @Prop({ default: 0 })
+    averageRating: number;
+
+    @Prop({ default: 1 })
+    version: number;
+
+    @Prop()
+    parentId: string;
+
+    @Prop()
+    avatarUrl: string;
+
+    @Prop()
+    avatarPublicId: string;
 }
 
 export const IaModelSchema = SchemaFactory.createForClass(IaModel);
