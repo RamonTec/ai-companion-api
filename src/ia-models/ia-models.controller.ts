@@ -19,7 +19,8 @@ export class IaModelsController {
         private readonly iaModelFindAllUseCase: GetIaModelsUseCase,
     ) { }
 
-    @UseGuards(AuthGuard)
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
     @Post('')
     register(@Body() dto: RegisterIaModelDto) {
         return this.iaModelRegisterUseCase.execute(dto);
